@@ -1,3 +1,4 @@
+import Timeout from './Timeout.js';
 export default class Slider {
     container;
     elements;
@@ -22,6 +23,10 @@ export default class Slider {
         this.itemActive = this.elements[this.index];
         this.elements.forEach((el) => this.hide(el));
         this.itemActive.classList.add('is--active');
+        this.auto(this.timeAction);
+    }
+    auto(time) {
+        new Timeout(() => this.next(), time);
     }
     prev() {
         const prevItem = this.index > 0 ? this.index - 1 : this.elements.length - 1;
