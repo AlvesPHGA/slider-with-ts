@@ -5,5 +5,8 @@ export default class Timeout {
         this.id = setTimeout(handler, id);
         this.handler = handler;
     }
+    clean() {
+        clearTimeout(this.id);
+    }
 }
 //# sourceMappingURL=Timeout.js.map

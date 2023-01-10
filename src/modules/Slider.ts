@@ -7,6 +7,7 @@ export default class Slider {
    timeAction;
    index: number;
    itemActive: Element;
+   timeout: Timeout | null;
 
    constructor(
       container: Element,
@@ -21,6 +22,8 @@ export default class Slider {
 
       this.index = 1;
       this.itemActive = this.elements[this.index];
+
+      this.timeout = null;
 
       this.init();
    }
@@ -40,7 +43,8 @@ export default class Slider {
    }
 
    auto(time: number) {
-      new Timeout(() => this.next(), time);
+      this.timeout?.clean();
+      this.timeout = new Timeout(() => this.next(), time);
    }
 
    prev() {

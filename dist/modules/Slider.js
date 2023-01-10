@@ -6,6 +6,7 @@ export default class Slider {
     timeAction;
     index;
     itemActive;
+    timeout;
     constructor(container, elements, controls, timeAction = 5000) {
         this.container = container;
         this.elements = elements;
@@ -13,6 +14,7 @@ export default class Slider {
         this.timeAction = timeAction;
         this.index = 1;
         this.itemActive = this.elements[this.index];
+        this.timeout = null;
         this.init();
     }
     hide(el) {
@@ -26,7 +28,8 @@ export default class Slider {
         this.auto(this.timeAction);
     }
     auto(time) {
-        new Timeout(() => this.next(), time);
+        this.timeout?.clean();
+        this.timeout = new Timeout(() => this.next(), time);
     }
     prev() {
         const prevItem = this.index > 0 ? this.index - 1 : this.elements.length - 1;
