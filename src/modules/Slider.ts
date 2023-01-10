@@ -3,6 +3,8 @@ export default class Slider {
    elements;
    controls;
    timeAction;
+   index: number;
+   itemActive: Element;
 
    constructor(
       container: Element,
@@ -14,5 +16,22 @@ export default class Slider {
       this.elements = elements;
       this.controls = controls;
       this.timeAction = timeAction;
+
+      this.index = 1;
+      this.itemActive = this.elements[this.index];
+
+      this.show(this.index);
+   }
+
+   hide(el: Element) {
+      el.classList.remove('is--active');
+   }
+
+   show(index: number) {
+      this.index = index;
+      this.itemActive = this.elements[this.index];
+
+      this.elements.forEach((el) => this.hide(el));
+      this.itemActive.classList.add('is--active');
    }
 }
