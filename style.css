@@ -24,8 +24,12 @@ video {
   display: block;
 }
 
+.slider {
+  display: grid;
+}
 .slider .slider__contents {
   display: grid;
+  grid-area: 1/1;
 }
 .slider .slider__contents .slider__item {
   grid-area: 1/1;
@@ -35,4 +39,12 @@ video {
 .slider .slider__contents .slider__item.is--active {
   opacity: 1;
   visibility: visible;
+}
+.slider .slider__controls {
+  display: grid;
+  grid-area: 1/1;
+  grid-template-columns: 1fr 1fr;
+}
+.slider .slider__controls button {
+  opacity: 0;
 }/*# sourceMappingURL=style.css.map */

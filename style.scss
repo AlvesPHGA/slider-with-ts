@@ -25,8 +25,11 @@ video {
 }
 
 .slider {
+   display: grid;
+
    .slider__contents {
       display: grid;
+      grid-area: 1/1;
 
       .slider__item {
          grid-area: 1/1;
@@ -37,6 +40,16 @@ video {
             opacity: 1;
             visibility: visible;
          }
+      }
+   }
+
+   .slider__controls {
+      display: grid;
+      grid-area: 1/1;
+      grid-template-columns: 1fr 1fr;
+
+      button {
+         opacity: 0;
       }
    }
 }

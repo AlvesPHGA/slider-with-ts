@@ -5,9 +5,12 @@ export default class Slider {
    elements;
    controls;
    timeAction;
+
    index: number;
    itemActive: Element;
    timeout: Timeout | null;
+   pause: boolean;
+   pausedTimeout: Timeout | null;
 
    constructor(
       container: Element,
@@ -24,6 +27,8 @@ export default class Slider {
       this.itemActive = this.elements[this.index];
 
       this.timeout = null;
+      this.pause = false;
+      this.pausedTimeout = null;
 
       this.init();
    }
@@ -54,17 +59,39 @@ export default class Slider {
    }
 
    next() {
+      if (this.pause) return;
+
       const nextItem =
          this.index + 1 < this.elements.length ? this.index + 1 : 0;
       this.show(nextItem);
+   }
+
+   paused() {
+      console.log('paused');
+      this.pausedTimeout = new Timeout(() => {
+         this.pause = true;
+      }, 300);
+   }
+
+   continue() {
+      console.log('continue');
+      this.pausedTimeout?.clean();
+
+      if (this.pause) {
+         this.pause = false;
+         this.auto(this.timeAction);
+      }
    }
 
    private addControls() {
       const prevButton = document.createElement('button');
       const nextButton = document.createElement('button');
 
-      this.controls.appendChild(prevButton).innerText = 'Slider Anterior';
-      this.controls.appendChild(nextButton).innerText = 'Proximo Slider';
+      this.controls.appendChild(prevButton);
+      this.controls.appendChild(nextButton);
+
+      this.controls.addEventListener('pointerdown', () => this.paused());
+      this.controls.addEventListener('pointerup', () => this.continue());
 
       prevButton.addEventListener('pointerup', () => this.prev());
       nextButton.addEventListener('pointerup', () => this.next());
