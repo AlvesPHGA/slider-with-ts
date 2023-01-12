@@ -15,7 +15,9 @@ export default class Slider {
         this.elements = elements;
         this.controls = controls;
         this.timeAction = timeAction;
-        this.index = 1;
+        this.index = localStorage.getItem('itemActive')
+            ? Number(localStorage.getItem('itemActive'))
+            : 0;
         this.itemActive = this.elements[this.index];
         this.timeout = null;
         this.paused = false;
@@ -25,13 +27,33 @@ export default class Slider {
     }
     hide(el) {
         el.classList.remove('is--active');
+        if (el instanceof HTMLVideoElement) {
+            el.currentTime = 0;
+            el.pause();
+        }
     }
     show(index) {
         this.index = index;
         this.itemActive = this.elements[this.index];
+        localStorage.setItem('itemActive', String(this.index));
         this.elements.forEach((el) => this.hide(el));
         this.itemActive.classList.add('is--active');
-        this.auto(this.timeAction);
+        if (this.itemActive instanceof HTMLVideoElement) {
+            this.autoVideo(this.itemActive);
+        }
+        else {
+            this.auto(this.timeAction);
+        }
+    }
+    autoVideo(video) {
+        video.muted = true;
+        video.play();
+        let firstPlay = true;
+        video.addEventListener('playing', () => {
+            if (firstPlay)
+                this.auto(video.duration * 1000);
+            firstPlay = false;
+        });
     }
     auto(time) {
         this.timeout?.clean();
@@ -48,18 +70,20 @@ export default class Slider {
         this.show(nextItem);
     }
     pause() {
-        console.log('paused');
         this.pausedTimeout = new Timeout(() => {
             this.timeout?.pause();
             this.paused = true;
+            if (this.itemActive instanceof HTMLVideoElement)
+                this.itemActive.pause();
         }, 300);
     }
     continue() {
-        console.log('continue');
         this.pausedTimeout?.clean();
         if (this.paused) {
             this.paused = false;
             this.timeout?.continue();
+            if (this.itemActive instanceof HTMLVideoElement)
+                this.itemActive.play();
         }
     }
     addControls() {
