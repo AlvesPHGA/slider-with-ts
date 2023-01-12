@@ -111,6 +111,7 @@ export default class Slider {
    }
 
    pause() {
+      document.body.classList.add('is--paused__in__body');
       this.pausedTimeout = new Timeout(() => {
          this.timeout?.pause();
          this.paused = true;
@@ -123,6 +124,8 @@ export default class Slider {
    }
 
    continue() {
+      document.body.classList.remove('is--paused__in__body');
+
       this.pausedTimeout?.clean();
 
       if (this.paused) {
@@ -144,7 +147,8 @@ export default class Slider {
       this.controls.appendChild(nextButton);
 
       this.controls.addEventListener('pointerdown', () => this.pause());
-      this.controls.addEventListener('pointerup', () => this.continue());
+      document.addEventListener('touchend', () => this.continue());
+      document.addEventListener('pointerup', () => this.continue());
 
       prevButton.addEventListener('pointerup', () => this.prev());
       nextButton.addEventListener('pointerup', () => this.next());

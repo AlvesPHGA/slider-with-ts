@@ -5,6 +5,17 @@
    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+body {
+   &.is--paused__in__body {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      text-size-adjust: none;
+      -webkit-text-size-adjust: none;
+      touch-action: manipulation;
+   }
+}
+
 main {
    width: 1200px;
    margin: 0 auto;
