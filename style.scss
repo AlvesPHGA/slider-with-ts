@@ -81,17 +81,19 @@ video {
             isolation: isolate;
          }
 
-         .thumb__item.is--active__thumb {
-            display: block;
-            height: inherit;
-            background: rgba($color: #fff, $alpha: 0.9);
-            border-radius: 0.25rem;
-            transform: translateX(-100%);
-            animation: thumbAnimation 3s forwards linear running;
-         }
+         .thumb__item {
+            &.is--active__thumb {
+               display: block;
+               height: inherit;
+               background: rgba($color: #fff, $alpha: 0.9);
+               border-radius: 0.25rem;
+               transform: translateX(-100%);
+               animation: thumbAnimation 3s forwards linear running;
+            }
 
-         .thumb__item.is--paused__thumb {
-            animation-play-state: paused;
+            &.is--paused__thumb {
+               animation-play-state: paused;
+            }
          }
 
          @keyframes thumbAnimation {

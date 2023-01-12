@@ -97,6 +97,7 @@ export default class Slider {
    }
 
    prev() {
+      if (this.paused) return;
       const prevItem =
          this.index > 0 ? this.index - 1 : this.elements.length - 1;
       this.show(prevItem);
