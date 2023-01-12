@@ -44,7 +44,47 @@ video {
   display: grid;
   grid-area: 1/1;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 }
 .slider .slider__controls button {
   opacity: 0;
+}
+.slider .slider__controls .thumb {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+.slider .slider__controls .thumb > span {
+  display: block;
+  flex: 1;
+  height: 0.25rem;
+  margin: 0.25rem;
+  border-radius: 0.125rem;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  isolation: isolate;
+}
+.slider .slider__controls .thumb .thumb__item.is--active__thumb {
+  display: block;
+  height: inherit;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0.25rem;
+  transform: translateX(-100%);
+  -webkit-animation: thumbAnimation 3s forwards linear running;
+          animation: thumbAnimation 3s forwards linear running;
+}
+.slider .slider__controls .thumb .thumb__item.is--paused__thumb {
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+}
+@-webkit-keyframes thumbAnimation {
+  to {
+    transform: initial;
+  }
+}
+@keyframes thumbAnimation {
+  to {
+    transform: initial;
+  }
 }/*# sourceMappingURL=style.css.map */

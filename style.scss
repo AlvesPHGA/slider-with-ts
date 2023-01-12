@@ -47,9 +47,47 @@ video {
       display: grid;
       grid-area: 1/1;
       grid-template-columns: 1fr 1fr;
+      position: relative;
 
       button {
          opacity: 0;
+      }
+
+      .thumb {
+         display: flex;
+         position: absolute;
+         width: 100%;
+         pointer-events: none;
+
+         > span {
+            display: block;
+            flex: 1;
+            height: 0.25rem;
+            margin: 0.25rem;
+            border-radius: 0.125rem;
+            background: rgba($color: #000000, $alpha: 0.3);
+            overflow: hidden;
+            isolation: isolate;
+         }
+
+         .thumb__item.is--active__thumb {
+            display: block;
+            height: inherit;
+            background: rgba($color: #fff, $alpha: 0.9);
+            border-radius: 0.25rem;
+            transform: translateX(-100%);
+            animation: thumbAnimation 3s forwards linear running;
+         }
+
+         .thumb__item.is--paused__thumb {
+            animation-play-state: paused;
+         }
+
+         @keyframes thumbAnimation {
+            to {
+               transform: initial;
+            }
+         }
       }
    }
 }
